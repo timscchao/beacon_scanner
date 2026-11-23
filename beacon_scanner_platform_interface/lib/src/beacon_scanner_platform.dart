@@ -36,7 +36,7 @@ abstract class BeaconScannerPlatform extends PlatformInterface {
   /// allowed to access location services and check
   /// whether location services is enabled.
   /// For iOS, it will check whether Bluetooth is enabled,
-  /// requestWhenInUse or requestAlways location services and check
+  /// request When In Use location authorization and check
   /// whether location services is enabled.
   Future<bool> initializeAndCheckScanning() => throw UnimplementedError('initializeAndCheckScanning() has not been implemented.');
 
@@ -71,7 +71,7 @@ abstract class BeaconScannerPlatform extends PlatformInterface {
   Future<bool> checkLocationServicesIfEnabled() => throw UnimplementedError('checkLocationServicesIfEnabled() has not been implemented.');
 
   /// Set the default AuthorizationStatus to use in requesting location authorization.
-  /// For iOS, this can be either [AuthorizationStatus.whenInUse] or [AuthorizationStatus.always].
+  /// For iOS, only [AuthorizationStatus.whenInUse] is supported.
   /// For Android, this is not used.
   ///
   /// This method should be called very early to have an effect,
@@ -93,7 +93,7 @@ abstract class BeaconScannerPlatform extends PlatformInterface {
   /// Request an authorization to the device.
   ///
   /// For Android, this will request a permission of `Manifest.permission.ACCESS_COARSE_LOCATION`.
-  /// For iOS, this will send a request `CLLocationManager#requestAlwaysAuthorization`.
+  /// For iOS, this will request When In Use location authorization.
   Future<bool> requestAuthorization() => throw UnimplementedError('requestAuthorization() has not been implemented.');
 
   /// Request to open Application Settings from device.

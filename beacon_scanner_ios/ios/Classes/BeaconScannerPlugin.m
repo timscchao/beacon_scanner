@@ -9,7 +9,6 @@
 
 @interface BeaconScannerPlugin() <CLLocationManagerDelegate, CBCentralManagerDelegate, CBPeripheralManagerDelegate>
 
-@property (assign, nonatomic) CLAuthorizationStatus defaultLocationAuthorizationType;
 @property (assign) BOOL shouldStartAdvertise;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -64,11 +63,6 @@
 
 - (id)init {
     self = [super init];
-    if (self) {
-        // Earlier versions of flutter_beacon only supported "always" permission,
-        // so set this as the default to stay backwards compatible.
-        self.defaultLocationAuthorizationType = kCLAuthorizationStatusAuthorizedAlways;
-    }
     return self;
 }
 
@@ -88,13 +82,7 @@
     if ([@"setLocationAuthorizationTypeDefault" isEqualToString:call.method]) {
         if (call.arguments != nil && [call.arguments isKindOfClass:[NSString class]]) {
             NSString *argumentAsString = (NSString*)call.arguments;
-            if ([@"ALWAYS" isEqualToString:argumentAsString]) {
-                self.defaultLocationAuthorizationType = kCLAuthorizationStatusAuthorizedAlways;
-                result(@(YES));
-                return;
-            }
             if ([@"WHEN_IN_USE" isEqualToString:argumentAsString]) {
-                self.defaultLocationAuthorizationType = kCLAuthorizationStatusAuthorizedWhenInUse;
                 result(@(YES));
                 return;
             }
@@ -482,15 +470,7 @@
 ///------------------------------------------------------------
 
 - (void)requestDefaultLocationManagerAuthorization {
-    switch (self.defaultLocationAuthorizationType) {
-        case kCLAuthorizationStatusAuthorizedWhenInUse:
-            [self.locationManager requestWhenInUseAuthorization];
-            break;
-        case kCLAuthorizationStatusAuthorizedAlways:
-        default:
-            [self.locationManager requestAlwaysAuthorization];
-            break;
-    }
+    [self.locationManager requestWhenInUseAuthorization];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {

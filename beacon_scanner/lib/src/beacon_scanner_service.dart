@@ -25,7 +25,7 @@ class BeaconScanner {
   /// allowed to access location services and check
   /// whether location services is enabled.
   /// For iOS, it will check whether Bluetooth is enabled,
-  /// requestWhenInUse or requestAlways location services and check
+  /// request When In Use location authorization and check
   /// whether location services is enabled.
   Future<bool> initialize([bool withCheck = false]) async {
     if (withCheck) {
@@ -67,7 +67,7 @@ class BeaconScanner {
   Future<bool> checkLocationServicesIfEnabled() => BeaconScannerPlatform.instance.checkLocationServicesIfEnabled();
 
   /// Set the default AuthorizationStatus to use in requesting location authorization.
-  /// For iOS, this can be either [AuthorizationStatus.whenInUse] or [AuthorizationStatus.always].
+  /// For iOS, only [AuthorizationStatus.whenInUse] is supported.
   /// For Android, this is not used.
   ///
   /// This method should be called very early to have an effect,
@@ -84,7 +84,7 @@ class BeaconScanner {
   /// Request an authorization to the device.
   ///
   /// For Android, this will request a permission of `Manifest.permission.ACCESS_COARSE_LOCATION`.
-  /// For iOS, this will send a request `CLLocationManager#requestAlwaysAuthorization`.
+  /// For iOS, this will request When In Use location authorization.
   Future<bool> requestAuthorization() => BeaconScannerPlatform.instance.requestAuthorization();
 
   /// Request to open Application Settings from device.

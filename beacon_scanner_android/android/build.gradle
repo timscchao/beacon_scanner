@@ -10,7 +10,6 @@ buildscript {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 group 'com.gfos.plugins.beaconscanner'
 version '1.0-SNAPSHOT'
@@ -31,17 +30,9 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-
     defaultConfig {
         minSdk 21
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
     }
 
     namespace 'com.gfos.plugins.beaconscanner'
@@ -49,6 +40,12 @@ android {
     lint {
         disable 'InvalidPackage'
         abortOnError false
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }
 

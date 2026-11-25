@@ -56,5 +56,4 @@ dependencies {
     implementation 'org.altbeacon:android-beacon-library:2.21.2'
     implementation 'androidx.core:core-ktx:1.17.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
-    compileOnly 'io.flutter:flutter_embedding_release:1.0.0-2994f7e1e682039464cb25e31a78b86a3c59b695'
 }
